@@ -1,0 +1,38 @@
+---
+name: 'RPM Build'
+
+on: [ push, pull_request ]
+
+jobs:
+  mock_srpm:
+    name: Build source RPM with Mock
+    runs-on: ubuntu-latest
+    container: rockylinux/rockylinux:8.4
+    steps:
+      - uses: actions/checkout@v2
+      - name: Add EPEL repositories
+        run: dnf install -y epel-release
+      - name: Install Mock
+        run: dnf install -y mock '@Development Tools'
+      - name: Create SRPM
+        run: mock -r epel-8-x86_64 --resultdir=srpm/ --buildsrpm --spec SPECS/hbjy-release.spec --sources=SOURCES/ --isolation=simple
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build.log
+          path: srpm/build.log
+      - uses: actions/upload-artifact@v2
+        with:
+          name: hbjy-release.src.rpm
+          path: srpm/*.src.rpm
+      - uses: actions/upload-artifact@v2
+        with:
+          name: hw_info.log
+          path: srpm/hw_info.log
+      - uses: actions/upload-artifact@v2
+        with:
+          name: root.log
+          path: srpm/root.log
+      - uses: actions/upload-artifact@v2
+        with:
+          name: state.log
+          path: srpm/state.log
