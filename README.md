@@ -30,4 +30,4 @@ respectively.
 
 ## See Also
 
-- [sxhkd.rpm](https://github.com/hbjydev/sxhkd.rpm) - my sxhkd RPM spec
+<!-- - [sxhkd.rpm](https://github.com/hbjydev/sxhkd.rpm) - my sxhkd RPM spec -->
